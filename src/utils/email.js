@@ -3,35 +3,46 @@ import axios from "axios";
 const BREVO_URL = "https://api.brevo.com/v3/smtp/email";
 
 const enviarEmail = async ({ to, subject, htmlContent }) => {
+  try {
+    console.log("===== BREVO =====");
+    console.log("API KEY:", process.env.BREVO_API_KEY?.substring(0, 15));
+    console.log("SENDER:", process.env.BREVO_SENDER_EMAIL);
+    console.log("TO:", to);
+    console.log("=================");
 
-  console.log("===== BREVO =====");
-console.log("API KEY:", process.env.BREVO_API_KEY?.substring(0, 15));
-console.log("SENDER:", process.env.BREVO_SENDER_EMAIL);
-console.log("=================");
-
-  return await axios.post(
-    BREVO_URL,
-    {
-      sender: {
-        name: process.env.BREVO_SENDER_NAME || "Hoy Se Juega",
-        email: process.env.BREVO_SENDER_EMAIL,
-      },
-      to: [
-        {
-          email: to,
+    const response = await axios.post(
+      BREVO_URL,
+      {
+        sender: {
+          name: process.env.BREVO_SENDER_NAME || "Hoy Se Juega",
+          email: process.env.BREVO_SENDER_EMAIL,
         },
-      ],
-      subject,
-      htmlContent,
-    },
-    {
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        to: [{ email: to }],
+        subject,
+        htmlContent,
       },
-    }
-  );
+      {
+        headers: {
+          "api-key": process.env.BREVO_API_KEY,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    console.log("===== EMAIL ENVIADO =====");
+    console.log(response.data);
+    console.log("=========================");
+
+    return response.data;
+  } catch (error) {
+    console.log("===== ERROR BREVO =====");
+    console.log("STATUS:", error.response?.status);
+    console.log("DATA:", error.response?.data);
+    console.log("=======================");
+
+    throw error;
+  }
 };
 
 export const enviarEmailVerificacion = async (email, token) => {
