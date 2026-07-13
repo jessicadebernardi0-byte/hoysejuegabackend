@@ -84,7 +84,7 @@ Ejemplo
 ```env
 PORT=5000
 
-MONGO_URI=mongodb://localhost:27017/hoysejuega
+MONGO_URI=mongodb...
 
 JWT_SECRET=tu_clave_secreta
 
@@ -94,9 +94,9 @@ BREVO_SENDER_EMAIL=correo@gmail.com
 
 BREVO_SENDER_NAME=Hoy Se Juega
 
-FRONTEND_URL=http://localhost:5173
+FRONTEND_URL=hoysejuegafrontend.vercel.app
 
-BACKEND_URL=http://localhost:5000
+BACKEND_URL=https://hoysejuegabackend-1.onrender.com/api
 ```
 
 Ejecutar
@@ -108,7 +108,7 @@ npm run dev
 Servidor disponible en
 
 ```
-http://localhost:5000
+https://hoysejuegabackend-1.onrender.com/api
 ```
 
 ---
